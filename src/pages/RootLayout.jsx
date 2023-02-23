@@ -4,7 +4,7 @@ function RootLayout() {
   return (
     <>
       <Header />
-      <div className="d-flex justify-content-center">
+      <div className="p-4">
         <Outlet />
       </div>
     </>
