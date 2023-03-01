@@ -1,0 +1,9 @@
+{
+  "projects": {
+    "default": "react-linkedin-67bc5",
+    "staging": "react-linkedin-67bc5",
+    "stor": "react-linkedin-67bc5"
+  },
+  "targets": {},
+  "etags": {}
+}
