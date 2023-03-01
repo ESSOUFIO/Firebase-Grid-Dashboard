@@ -1,12 +1,12 @@
 import { Navigate } from "react-router-dom";
 import { useSession } from "../firebase/UserProvider";
 
-const withProtect = (Component) => {
+const PrivateRoute = (Component) => {
   const Wrapper = (props) => {
     const { user } = useSession();
-    return !!user ? <Navigate to={-1} /> : <Component {...props} />;
+    return !!user ? <Component {...props} /> : <Navigate to="/login" />;
   };
   return Wrapper;
 };
 
-export default withProtect;
+export default PrivateRoute;

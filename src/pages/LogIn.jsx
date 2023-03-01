@@ -3,7 +3,7 @@ import { Button, Form, Row } from "react-bootstrap";
 import { Link, Navigate, useNavigate } from "react-router-dom";
 import { login } from "../firebase/auth";
 import AlertComponent from "../components/AlertComponent";
-import withProtect from "../utils/withProtect";
+import withProfileRedirect from "../utils/withProfileRedirect";
 
 const LogIn = () => {
   const [email, setEmail] = useState("");
@@ -84,4 +84,4 @@ const LogIn = () => {
   );
 };
 
-export default withProtect(LogIn);
+export default withProfileRedirect(LogIn);

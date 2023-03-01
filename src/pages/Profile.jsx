@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Form, Button, Col, Row, Container } from "react-bootstrap";
 import { useParams } from "react-router-dom";
 import { db } from "../firebase/config";
-import withGuard from "../utils/withGuard";
+import PrivateRoute from "../utils/PrivateRoute";
 import AlertComponent from "../components/AlertComponent";
 import { updateUserDocument } from "../firebase/user";
 import PhotoImage from "../components/ProfileImage";
@@ -165,4 +165,4 @@ const Profile = () => {
   );
 };
 
-export default withGuard(Profile);
+export default PrivateRoute(Profile);
