@@ -5,10 +5,21 @@ import { auth } from "./config";
 const UserContext = createContext();
 
 export const UserProvider = ({ children }) => {
-  const [session, setSession] = useState({ user: null, loading: true });
+  const [session, setSession] = useState({
+    user: null,
+    loading: true,
+    isAdmin: false,
+  });
+
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setSession({ user, loading: false });
+    const unsubscribe = onAuthStateChanged(auth, async (user) => {
+      let isAdmin = false;
+      if (user) {
+        const token = await user.getIdTokenResult();
+
+        isAdmin = token.claims.admin;
+      }
+      setSession({ loading: false, user, isAdmin });
     });
     return () => unsubscribe();
   }, []);

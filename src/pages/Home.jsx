@@ -1,8 +1,8 @@
 import React from "react";
-import withGuard from "../utils/withGuard";
+import PrivateRoute from "../utils/PrivateRoute";
 
 const Home = () => {
   return <h1>Home</h1>;
 };
 
-export default withGuard(Home);
+export default PrivateRoute(Home);

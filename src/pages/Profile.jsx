@@ -1,12 +1,13 @@
 import { doc, onSnapshot } from "firebase/firestore";
 import React, { useEffect, useState } from "react";
 import { Form, Button, Col, Row, Container } from "react-bootstrap";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { db } from "../firebase/config";
-import withGuard from "../utils/withGuard";
+import PrivateRoute from "../utils/PrivateRoute";
 import AlertComponent from "../components/AlertComponent";
 import { updateUserDocument } from "../firebase/user";
 import PhotoImage from "../components/ProfileImage";
+import { useSession } from "../firebase/UserProvider";
 
 const Profile = () => {
   const [userDocument, setUserDocument] = useState(null);
@@ -14,15 +15,21 @@ const Profile = () => {
   const [success, setSuccess] = useState(false);
 
   const params = useParams();
+  const { user, isAdmin } = useSession();
+  const navigate = useNavigate();
 
   useEffect(() => {
+    if (user.uid !== params.id && !isAdmin) {
+      console.log("ok");
+      navigate("/");
+    }
     const unsub = onSnapshot(doc(db, "users", params.id), (doc) => {
       if (doc.exists()) {
         setUserDocument(doc.data());
       }
     });
     return unsub;
-  }, [params.id]);
+  }, [params.id, user.uid, navigate, isAdmin]);
 
   if (!userDocument) {
     return null;
@@ -165,4 +172,4 @@ const Profile = () => {
   );
 };
 
-export default withGuard(Profile);
+export default PrivateRoute(Profile);
