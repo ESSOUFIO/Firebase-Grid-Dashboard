@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button, Form, Row } from "react-bootstrap";
-import { Link, Navigate, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { login } from "../firebase/auth";
 import AlertComponent from "../components/AlertComponent";
 import withProfileRedirect from "../utils/withProfileRedirect";
@@ -12,6 +12,15 @@ const LogIn = () => {
   const [success, setSuccess] = useState(false);
 
   const navigate = useNavigate();
+
+  const routeOnLogin = async (user) => {
+    const token = await user.getIdTokenResult();
+    if (token.claims.admin) {
+      navigate("/users");
+    } else {
+      navigate("/");
+    }
+  };
 
   const SubmitHandler = async (e) => {
     e.preventDefault();
@@ -25,9 +34,7 @@ const LogIn = () => {
     }
 
     if (user) {
-      setTimeout(() => {
-        <Navigate to={"/"} replace={true} />;
-      }, 1000);
+      routeOnLogin(user);
     }
   };
   return (

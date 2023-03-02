@@ -11,6 +11,7 @@ import { UserProvider } from "./firebase/UserProvider";
 import Profile from "./pages/Profile";
 import Home from "./pages/Home";
 import Feature from "./pages/Feature";
+import Users from "./pages/Users";
 
 const router = createBrowserRouter([
   {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
       {
         path: "profile/:id",
         element: <Profile />,
+      },
+      {
+        path: "users",
+        element: <Users />,
       },
     ],
   },
