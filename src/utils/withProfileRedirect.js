@@ -3,8 +3,14 @@ import { useSession } from "../firebase/UserProvider";
 
 const withProfileRedirect = (Component) => {
   const Wrapper = (props) => {
-    const { user } = useSession();
-    return !!user ? <Navigate to={-1} /> : <Component {...props} />;
+    const { user, isAdmin } = useSession();
+    return !!user && !isAdmin ? (
+      <Navigate to={"/"} />
+    ) : isAdmin ? (
+      <Navigate to={"/users"} />
+    ) : (
+      <Component {...props} />
+    );
   };
   return Wrapper;
 };
